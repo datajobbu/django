@@ -1,19 +1,29 @@
 {% load static %}
 <!doctype html>
 <html lang="ko">
+
 <head>
+    <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
-    <link rel="stylesheet" type="text/css" href="{% static 'bootstrap.min.css' %}">
-
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" type="text/css" href="{% static 'bootstrap.css' %}">
+    <!-- Custom(style) CSS -->
     <link rel="stylesheet" type="text/css" href="{% static 'style.css' %}">
     <title>Hello, papago!</title>
 </head>
-<body>
 
+<body>
+{% include "navbar.html" %}
+
+<!-- 기본 템플릿 안에 삽입될 내용 -->
 {% block content %}
 {% endblock %}
+
+<!-- jQuery-->
+<script src="{% static 'jquery-3.5.1.min.js' %}"></script>
+<!-- Bootstrap JS-->
+<script src="{% static 'bootstrap.js' %}"></script>
 
 </body>
 </html>
