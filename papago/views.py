@@ -1,7 +1,8 @@
-from django.shortcuts import render, get_object_or_404, redirect
 from django.http import HttpResponse
 from django.utils import timezone
 from django.core.paginator import Paginator
+from django.contrib.auth.decorators import login_required
+from django.shortcuts import render, get_object_or_404, redirect
 
 from .models import Question, Answer
 from .forms import QuestionForm, AnswerForm
@@ -28,7 +29,7 @@ def detail(request, question_id):
 
     return render(request, 'papago/question_detail.html', context)
 
-
+@login_required(login_url='common:login')
 def answer_create(request, question_id):
     """답변 등록"""
     question = get_object_or_404(Question, pk=question_id)
@@ -36,25 +37,36 @@ def answer_create(request, question_id):
         form = AnswerForm(request.POST)
         if form.is_valid():
             answer = form.save(commit=False)
+            answer.author = request.user
             answer.create_date = timezone.now()
             answer.question = question
             answer.save()
+
             return redirect('papago:detail', question_id=question.id)
+
     else:
         form = AnswerForm()
+
     context = {'question': question, 'form': form}
+
     return render(request, 'papago/question_detail.html', context)
 
-
+@login_required(login_url='common:login')
 def question_create(request):
     if request.method == 'POST':
         form = QuestionForm(request.POST)
+
         if form.is_valid():
             question = form.save(commit=False)
+            question.author = request.user
             question.create_date = timezone.now()
             question.save()
+
             return redirect('papago:index')
+
     else:
         form = QuestionForm()
+
     context = {'form': form}
+
     return render(request, 'papago/question_form.html', context)
