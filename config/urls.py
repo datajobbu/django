@@ -21,4 +21,6 @@ from papago import views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('papago/', include('papago.urls')),
+    path('common/', include('common.urls')),
+    path('', views.index, name='index'),
 ]
