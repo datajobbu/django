@@ -1,0 +1,20 @@
+
+
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container my-3">
+    <form action="" method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="card-footer">
+            <div class="form-group">
+                {{ form.up_file }}
+                <small id="help" class="form-text text-muted">
+                    [파일 업로드]&nbsp;첨부할 파일을 업로드해주세요. 여러 파일은 압축해서 업로드해주세요.
+                </small>
+            </div>
+        </div>
+        <input type="submit" value="Save">
+    </form>
+</div>
+{% endblock %}
