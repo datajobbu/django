@@ -1,5 +1,7 @@
 from django.urls import path
-from .views import base_views, question_views, answer_views, comment_views, vote_views
+from django.conf import settings
+from django.conf.urls.static import static
+from .views import base_views, question_views, answer_views, comment_views, vote_views, upload_views
 
 app_name = 'papago'
 
@@ -37,4 +39,8 @@ urlpatterns = [
     # vote_views.py
     path('vote/question/<int:question_id>/', vote_views.vote_question, name='vote_question'),
     path('vote/answer/<int:answer_id>/', vote_views.vote_answer, name='vote_answer'),
-]
+
+    # vote_views.py
+    path('upload/create/', upload_views.upload_file, name='upload_file'),
+
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

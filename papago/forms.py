@@ -1,5 +1,5 @@
 from django import forms
-from papago.models import Question, Answer, Comment
+from papago.models import Question, Answer, Comment, FileUpload
 
 
 class QuestionForm(forms.ModelForm):
@@ -30,3 +30,9 @@ class CommentForm(forms.ModelForm):
         labels = {
             'content': '댓글내용',
         }
+
+
+class UploadForm(forms.ModelForm):
+    class Meta:
+        model = FileUpload
+        fields = ['title', 'up_file']
