@@ -1,7 +1,7 @@
+from django.utils import timezone
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
-from django.shortcuts import render, get_object_or_404, redirect
-from django.utils import timezone
+from django.shortcuts import render, get_object_or_404, redirect, resolve_url
 
 from ..forms import AnswerForm
 from ..models import Question, Answer
@@ -19,7 +19,7 @@ def answer_create(request, question_id):
             answer.question = question
             answer.save()
 
-            return redirect('papago:detail', question_id=question.id)
+            return redirect('{}#answer_{}'.format(resolve_url('papago:detail', question_id=question.id), answer.id))
 
     else:
         form = AnswerForm()
@@ -47,7 +47,7 @@ def answer_modify(request, answer_id):
             answer.modify_date = timezone.now()
             answer.save()
             
-            return redirect('papago:detail', question_id=answer.question.id)
+            return redirect('{}#answer_{}'.format(resolve_url('papago:detail', question_id=answer.question.id), answer.id))
     
     else:
         form = AnswerForm(instance=answer)

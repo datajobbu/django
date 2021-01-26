@@ -57,6 +57,7 @@
                     {% if question.comment_set.count > 0 %}
                     <div class="mt-3">
                         {% for comment in question.comment_set.all %}
+                        <a name="comment_{{ comment.id }}"></a>
                         <div class="comment py-2 text-muted">
                             <span style="white-space: pre-line;">{{ comment.content }}</span>
                             <span>
@@ -87,14 +88,17 @@
     <!-- ---------------------------------답변------------------------------------------- -->
     <h5 class="border-bottom my-3 py-2">{{question.answer_set.count}}개의 답변이 있습니다.</h5>
     {% for answer in question.answer_set.all %}
-    
+    <a name="answer_{{ answer.id }}"></a>
+    <!-- ------------------------------------------------------------------------------- -->
     <div class="row my-3">
-        <div class="col-1">  <!-- 추천영역 -->
+        <!-- 추천영역 -->
+        <div class="col-1">  
             <div class="bg-light text-center p-3 border font-weight-bolder mb-1">{{answer.voter.count}}</div>
             <a href="#" data-uri="{% url 'papago:vote_answer' answer.id  %}" 
                 class="recommend btn btn-sm btn-secondary btn-block my-1">추천</a>
         </div>
-        <div class="col-11">  <!-- 답변영역 -->
+        <!-- 답변영역 -->
+        <div class="col-11">
             <div class="card">
                 <div class="card-body">
                     <div class="card-text" style="white-space: pre-line;">{{ answer.content }}</div>
@@ -121,9 +125,11 @@
                            data-uri="{% url 'papago:answer_delete' answer.id  %}">삭제</a>
                     </div>
                     {% endif %}
+                    <!-- 답변 댓글 -->
                     {% if answer.comment_set.count > 0 %}
                     <div class="mt-3">
-                    {% for comment in answer.comment_set.all %}
+                        {% for comment in answer.comment_set.all %}
+                        <a name="comment_{{ comment.id }}"></a>
                         <div class="comment py-2 text-muted">
                             <span style="white-space: pre-line;">{{ comment.content }}</span>
                             <span>
@@ -133,12 +139,12 @@
                                 {% endif %}
                             </span>
                             {% if request.user == comment.author %}
-                            <a href="{% url 'papago:comment_modify_answer' comment.id  %}" class="small">수정</a>,
+                            <a href="{% url 'papago:comment_modify_answer' comment.id %}" class="small">수정</a>,
                             <a href="#" class="small delete" 
-                               data-uri="{% url 'papago:comment_delete_answer' comment.id  %}">삭제</a>
+                               data-uri="{% url 'papago:comment_delete_answer' comment.id %}">삭제</a>
                             {% endif %}
                         </div>
-                    {% endfor %}
+                        {% endfor %}
                     </div>
                     {% endif %}
                     <div>
