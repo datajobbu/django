@@ -2,17 +2,17 @@ import os
 import urllib
 import mimetypes
 
+from pathlib import Path
+from pptx import Presentation
+
 from django.utils import timezone
-from wsgiref.util import FileWrapper
 from django.http import HttpResponse, Http404
 from django.shortcuts import render, get_object_or_404, redirect, resolve_url
 
+from config import settings
 from .forms import UploadForm, DownloadForm
 from .models import FileUpload, FileDownload
 
-from pathlib import Path
-from pptx import Presentation
-from config import settings
 from .papago_api import translate_ppt
 
 
@@ -26,12 +26,11 @@ def file_upload(request):
             try:
                 name = request.FILES['up_file'].name
                 translate_papago(name)
-                #return redirect('translator:file_download')
+
                 return render(request, 'translator/download_form.html', {'name':name})
 
             except:
                 None
-            #print(request.FILES['up_file'].name)
 
     return render(request, 'translator/upload_form.html', {'form':form})
 
