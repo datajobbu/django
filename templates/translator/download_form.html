@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container my-3">
+    <form action="" method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="col-12 text-left">
+            <span>첨부파일 :&nbsp;</span>
+            <a href="{% url 'translator:file_download' name %}">{{ name|truncatechars:50 }}</a>
+            <!-- <input type="submit" value="Download" style="float:right;"> -->
+        </div>
+    </form>
+</div>
+{% endblock %}

@@ -9,6 +9,7 @@ from ..models import Question
 
 @login_required(login_url='common:login')
 def question_create(request):
+    """ 질문등록 """
     if request.method == 'POST':
         form = QuestionForm(request.POST)
 
