@@ -5,13 +5,12 @@ import mimetypes
 from pathlib import Path
 from pptx import Presentation
 
-from django.utils import timezone
 from django.http import HttpResponse, Http404
-from django.shortcuts import render, get_object_or_404, redirect, resolve_url
+from django.shortcuts import render, redirect
 
 from config import settings
-from .forms import UploadForm, DownloadForm
-from .models import FileUpload, FileDownload
+from .forms import UploadForm
+from .models import FileUpload
 
 from .papago_api import translate_ppt
 

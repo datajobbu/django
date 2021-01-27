@@ -18,8 +18,3 @@ def get_file_path(instance, filename):
 class FileUpload(models.Model):
     up_file = models.FileField(null=True, blank=True, verbose_name='file')
     #filename = models.CharField(max_length=64, null=True, verbose_name='filename')
-
-
-class FileDownload(models.Model):
-    dw_file = models.FileField(null=True, blank=True, verbose_name='file')
-    #filename = models.CharField(max_length=64, null=True, verbose_name='filename')
