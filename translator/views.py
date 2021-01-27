@@ -13,7 +13,10 @@ def file_upload(request):
         form = UploadForm(request.POST, request.FILES)
 
         if form.is_valid():
-            #translate_papago(request.FILES['up_file'].name)
-            print(request.FILES['up_file'].name)
+            try:
+                translate_papago(request.FILES['up_file'].name)
+            except:
+                None
+            #print(request.FILES['up_file'].name)
 
     return render(request, 'translator/upload_form.html', {'form':form})
