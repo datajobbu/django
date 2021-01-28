@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container">
+    <center>
+        <img src='../static/img/logo.png' height="100px">
+        <br/>
+        <h1>의심거래보고서 자동화 템플릿</h1>
+        <br/>
+        <h3>보고서 작성일: {{ report_date }}</h3>
+        <hr />
+    </center>
+
+    <table class="table">
+        <thead align="center">
+            <th>Feature Importance</th>
+        </thead>
+        <tbody align="center">
+        <tr>
+            <th><img src='../static/img/feature_importance.png' height="260px"></th>
+        </tr>
+        </tbody>
+    </table>
+    <br>
+    <table class="table">
+        <thead align="center">
+            <th>Contents</th>
+        </thead>
+        <tbody>
+        <tr>
+            <th>{{tid}} 고객은 {{ age }} 세의 {{ gender }} 고객으로, (ost_ctr)에서 (dst_ctr)로의 해외송금 거래를 이용함.<br>
+                <br>
+                (aml_date) 기준 고객의 <br>
+                1일 거래 금액: {{ sum_amt_1d }} <br>
+                1일 거래 건수: {{ sum_cnt_1d }} <br>
+                1일 상대방 수: {{ cnt_opp_1d }} <br>
+                <br>
+                최근 거래에서 {{ aml_code }}[{{ code_name }}] (을)를 위반으로 의심됨. <br>
+                (code_detail)
+            </th>
+        </tr>
+        </tbody>
+    </table>
+        
+    
+    
+</div>
+{% endblock %}

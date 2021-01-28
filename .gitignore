@@ -5,3 +5,5 @@ __pycache__
 **.DS_Store
 translator/papago_api.py
 media
+aml
+static/img

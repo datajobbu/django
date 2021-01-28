@@ -35,6 +35,7 @@ INSTALLED_APPS = [
     'papago.apps.PapagoConfig',
     'common.apps.CommonConfig',
     'translator.apps.TranslatorConfig',
+    'report.apps.ReportConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -132,3 +133,6 @@ LOGOUT_REDIRECT_URL = '/'
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+AML_URL = '/aml/'
+AML_ROOT = os.path.join(BASE_DIR, 'aml')

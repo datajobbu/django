@@ -23,5 +23,6 @@ urlpatterns = [
     path('papago/', include('papago.urls')),
     path('common/', include('common.urls')),
     path('translator/', include('translator.urls')),
+    path('report/', include('report.urls')),
     path('', base_views.index, name='index'),
 ]
