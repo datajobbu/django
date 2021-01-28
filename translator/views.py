@@ -23,12 +23,14 @@ def file_upload(request):
         form = UploadForm(request.POST, request.FILES)
         if form.is_valid():
             try:
+                form.save()
                 name = request.FILES['up_file'].name
                 translate_papago(name)
-
+                
                 return render(request, 'translator/download_form.html', {'name':name})
 
             except:
+                print('error_upload')
                 None
 
     return render(request, 'translator/upload_form.html', {'form':form})
@@ -53,9 +55,8 @@ def file_download(request, filename):
 
 def translate_papago(filename):
     """ 파파고 API 이용 번역 """
-    BASE_DIR = Path(__file__).resolve().parent.parent
-    path = os.path.join(BASE_DIR, 'media/')
-    prs = Presentation(path + filename)
+    file_url = settings.MEDIA_ROOT +'/'
+    prs = Presentation(file_url + filename)
 
     for slide in prs.slides:
         for shape in slide.shapes:
@@ -69,4 +70,5 @@ def translate_papago(filename):
                 run = paragraph.add_run()
                 run.text = translated
 
-    prs.save(path + "translated_" + filename)
+    print(file_url + "translated_" + filename)
+    prs.save(file_url + "translated_" + filename)
