@@ -1,48 +1,39 @@
 {% extends 'base.html' %}
+{% load papago_filter %}
 
 {% block content %}
-<div class="container">
-    <center>
-        <img src='../static/img/logo.png' height="100px">
-        <br/>
-        <h1>의심거래보고서 자동화 템플릿</h1>
-        <br/>
-        <h3>보고서 작성일: {{ report_date }}</h3>
-        <hr />
-    </center>
-
+<div class="container my-3">
+    <!-- 글 목록 -->
     <table class="table">
-        <thead align="center">
-            <th>Feature Importance</th>
-        </thead>
-        <tbody align="center">
-        <tr>
-            <th><img src='../static/img/feature_importance.png' height="260px"></th>
+        <thead>
+        <tr class="text-center thead-dark">
+            <th>번호</th>
+            <th>tid</th>
+            <th>aml코드</th>
+            <th>보고일시</th>
         </tr>
-        </tbody>
-    </table>
-    <br>
-    <table class="table">
-        <thead align="center">
-            <th>Contents</th>
         </thead>
         <tbody>
-        <tr>
-            <th>{{tid}} 고객은 {{ age }} 세의 {{ gender }} 고객으로, (ost_ctr)에서 (dst_ctr)로의 해외송금 거래를 이용함.<br>
-                <br>
-                (aml_date) 기준 고객의 <br>
-                1일 거래 금액: {{ sum_amt_1d }} <br>
-                1일 거래 건수: {{ sum_cnt_1d }} <br>
-                1일 상대방 수: {{ cnt_opp_1d }} <br>
-                <br>
-                최근 거래에서 {{ aml_code }}[{{ code_name }}] (을)를 위반으로 의심됨. <br>
-                (code_detail)
-            </th>
+        {% if aml_list %}
+        {% for aml in aml_list %}
+        <tr class="text-center">
+            <td class="text-left">{{ aml.id }}</td>
+            <td class="text-left">
+                <a href="{% url 'report:detail' aml.tid %}">
+                    {{ aml.tid }}
+                </a>
+            </td>
+            <td>{{ aml.aml_code }}</td>
+            <td>{{ aml.report_date }}</td>
+        
         </tr>
+        {% endfor %}
+        {% else %}
+        <tr>
+            <td colspan="3">질문이 없습니다.</td>
+        </tr>
+        {% endif %}
         </tbody>
     </table>
-        
-    
-    
 </div>
 {% endblock %}

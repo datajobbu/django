@@ -3,6 +3,7 @@ from report.models import CSVUpload
 
 
 class CSVForm(forms.ModelForm):
-    class Meta:
-        model = CSVUpload
-        fields = ['tid']
+    pass
+    #class Meta:
+    #    model = CSVUpload
+    #    fields = ['tid']
