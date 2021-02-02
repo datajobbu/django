@@ -12,28 +12,23 @@ from django.http import HttpResponse, Http404
 from django.shortcuts import render, redirect
 
 from config import settings
-from config.settings import NMT_ID, NMT_PW
 from .forms import UploadForm
 from .models import FileUpload
+from config.settings import NMT_ID, NMT_PW
 
 
 def file_upload(request):
     """ 번역할 파일 업로드 """
     form = UploadForm()
-    
+    print(settings.MEDIA_ROOT)
     if request.method == 'POST':
         form = UploadForm(request.POST, request.FILES)
         if form.is_valid():
-            try:
-                form.save()
-                name = request.FILES['up_file'].name
-                translate_papago(name)
+            form.save()
+            name = request.FILES['up_file'].name
+            translate_papago(name)
                 
-                return render(request, 'translator/download_form.html', {'name':name})
-
-            except:
-                print('error_upload')
-                None
+            return render(request, 'translator/download_form.html', {'name':name})
 
     return render(request, 'translator/upload_form.html', {'form':form})
 
@@ -66,24 +61,27 @@ def translate_papago(filename):
                 continue
 
             for paragraph in shape.text_frame.paragraphs:
-                translated = papago(paragraph.text)
+                content = paragraph.text
+                trimmed = ' '.join(content.split())
+                if not trimmed:
+                    continue
+                
+                translated = papago(trimmed)
                 paragraph.clear()
                 
                 run = paragraph.add_run()
                 run.text = translated
 
-    print(file_url + "translated_" + filename)
     prs.save(file_url + "translated_" + filename)
 
 
 def papago(txt):
-    """번역"""
+    """파파고 번역 API"""
     nmt_id = NMT_ID
     nmt_pw = NMT_PW
 
     encText = urllib.parse.quote(txt)
     data = "source=ko&target=en&text=" + encText
-    
     url = "https://openapi.naver.com/v1/papago/n2mt"
     
     request = urllib.request.Request(url)
@@ -95,7 +93,6 @@ def papago(txt):
 
     if(rescode==200):
         response_body = response.read()
-        
         res = json.loads(response_body.decode('utf-8'))
         return(res['message']['result']['translatedText'])
 
