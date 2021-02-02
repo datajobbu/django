@@ -7,3 +7,4 @@ translator/papago_api.py
 media
 aml
 static/img
+secrets.json
