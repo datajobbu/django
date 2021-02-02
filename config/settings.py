@@ -22,7 +22,8 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
 
-# SECURITY WARNING: keep the secret key used in production secret!
+# SECRET Keys
+
 with open("secrets.json") as f:
     secrets = json.loads(f.read())
 
@@ -38,7 +39,9 @@ SECRET_KEY = get_secret("SECRET_KEY")
 NMT_ID = get_secret("NMT_ID")
 NMT_PW = get_secret("NMT_PW")
 
+
 # SECURITY WARNING: don't run with debug turned on in production!
+
 DEBUG = True
 
 ALLOWED_HOSTS = []

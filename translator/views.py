@@ -49,7 +49,7 @@ def file_download(request, filename):
 
 
 def translate_papago(filename):
-    """ 파파고 API 이용 번역 """
+    """ PPT 번역 """
     file_url = MEDIA_ROOT +'/'
     prs = Presentation(file_url + filename)
 
@@ -74,7 +74,7 @@ def translate_papago(filename):
 
 
 def papago(txt):
-    """파파고 번역 API"""
+    """ 파파고 번역 API 호출 """
     nmt_id = NMT_ID
     nmt_pw = NMT_PW
 

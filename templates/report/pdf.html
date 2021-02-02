@@ -3,16 +3,16 @@
 <head>
     <style>
         @font-face {
-        font-family: AppleSDGothicNeo;
-        src: url("/System/Library/Fonts/AppleSDGothicNeo.ttf");
+        font-family: AppleSDGothicNeoH;
+        src: url("./static/fonts/AppleSDGothicNeoH.ttf");
         }
 
         body {
-        font-family: AppleSDGothicNeo;
+        font-family: AppleSDGothicNeoH;
         }
     </style>  
     <meta charset="utf-8">
-    <title>Sales Report</title>
+    <title>AML Report</title>
     <style type="text/css">
         @page {
             size: A4;
@@ -66,15 +66,14 @@
     </style>
 </head>
 <body>
-    {% load static %}
     <div class="container">
         {% for obj in aml_list %}
         <center>
-            <img src="{% static 'img/logo.png' %}" height="100px">
+            {% load static %}
+            <img src="./static/img/logo.png" height="100px">
             <br/>
             <h1>AML Report Template</h1>
-            <br/>
-            <h3>Report date: {{ obj.report_date }}</h3>
+            <h3>보고 일시: {{ obj.report_date }}</h3>
             <hr />
         </center>
     
@@ -84,7 +83,7 @@
             </thead>
             <tbody align="center">
             <tr>
-                <th><img src="{% static 'img/feature_importance.png' %}" height="300px"></th>
+                <th><img src="./static/img/feature_importance.png" height="300px"></th>
             </tr>
             </tbody>
         </table>
