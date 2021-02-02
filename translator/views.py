@@ -11,16 +11,14 @@ from pptx import Presentation
 from django.http import HttpResponse, Http404
 from django.shortcuts import render, redirect
 
-from config import settings
 from .forms import UploadForm
 from .models import FileUpload
-from config.settings import NMT_ID, NMT_PW
+from config.settings import NMT_ID, NMT_PW, MEDIA_ROOT
 
 
 def file_upload(request):
     """ 번역할 파일 업로드 """
     form = UploadForm()
-    print(settings.MEDIA_ROOT)
     if request.method == 'POST':
         form = UploadForm(request.POST, request.FILES)
         if form.is_valid():
@@ -36,7 +34,7 @@ def file_upload(request):
 def file_download(request, filename):
     """ 번역된 파일 다운로드 """
     file_name = 'translated_' + filename
-    file_url = settings.MEDIA_ROOT +'/' + file_name
+    file_url = MEDIA_ROOT +'/' + file_name
     
     if request.method == 'GET':
         if os.path.exists(file_url):
@@ -52,7 +50,7 @@ def file_download(request, filename):
 
 def translate_papago(filename):
     """ 파파고 API 이용 번역 """
-    file_url = settings.MEDIA_ROOT +'/'
+    file_url = MEDIA_ROOT +'/'
     prs = Presentation(file_url + filename)
 
     for slide in prs.slides:
