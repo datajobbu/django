@@ -26,7 +26,6 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 with open("secrets.json") as f:
     secrets = json.loads(f.read())
 
-
 def get_secret(setting, secret=secrets):
     try:
         return secrets[setting]
@@ -35,8 +34,10 @@ def get_secret(setting, secret=secrets):
         error_msg = "Set the {0} environment variable".format(setting)
         raise ImproperlyConfigured(error_msg) 
 
-
 SECRET_KEY = get_secret("SECRET_KEY")
+NMT_ID = get_secret("NMT_ID")
+NMT_PW = get_secret("NMT_PW")
+
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 

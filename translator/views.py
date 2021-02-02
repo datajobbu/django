@@ -1,5 +1,8 @@
 import os
+import ssl
+import json
 import urllib
+import urllib.request
 import mimetypes
 
 from pathlib import Path
@@ -9,10 +12,9 @@ from django.http import HttpResponse, Http404
 from django.shortcuts import render, redirect
 
 from config import settings
+from config.settings import NMT_ID, NMT_PW
 from .forms import UploadForm
 from .models import FileUpload
-
-from .papago_api import translate_ppt
 
 
 def file_upload(request):
@@ -64,7 +66,7 @@ def translate_papago(filename):
                 continue
 
             for paragraph in shape.text_frame.paragraphs:
-                translated = translate_ppt(paragraph.text)
+                translated = papago(paragraph.text)
                 paragraph.clear()
                 
                 run = paragraph.add_run()
@@ -72,3 +74,30 @@ def translate_papago(filename):
 
     print(file_url + "translated_" + filename)
     prs.save(file_url + "translated_" + filename)
+
+
+def papago(txt):
+    """번역"""
+    nmt_id = NMT_ID
+    nmt_pw = NMT_PW
+
+    encText = urllib.parse.quote(txt)
+    data = "source=ko&target=en&text=" + encText
+    
+    url = "https://openapi.naver.com/v1/papago/n2mt"
+    
+    request = urllib.request.Request(url)
+    request.add_header("X-Naver-Client-Id", nmt_id)
+    request.add_header("X-Naver-Client-Secret", nmt_pw)
+    res_ssl = ssl._create_unverified_context()
+    response = urllib.request.urlopen(request, data=data.encode("utf-8"), context=res_ssl)
+    rescode = response.getcode()
+
+    if(rescode==200):
+        response_body = response.read()
+        
+        res = json.loads(response_body.decode('utf-8'))
+        return(res['message']['result']['translatedText'])
+
+    else:
+        return("Error Code:" + rescode) 

@@ -30,7 +30,6 @@ def index(request):
                                      code_name=row[7], report_date=row[8])'''
     
     aml_list = CSVUpload.objects.order_by('-report_date')
-
     return render(request, 'report/report.html', {'aml_list':aml_list})
 
 
