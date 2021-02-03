@@ -42,7 +42,7 @@ def detail(request, tid):
 '''
  
 def detail(request, tid):
-    """ AML 상세 정보를 PDF로 반환(영어만 가능## 수정 예정) """
+    """ AML 상세 정보를 PDF로 반환 """
     aml_list = CSVUpload.objects.filter(tid=tid).values()
     context = {'aml_list' : aml_list}
 
